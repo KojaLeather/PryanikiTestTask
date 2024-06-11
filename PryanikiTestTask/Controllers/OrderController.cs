@@ -33,7 +33,22 @@ namespace PryanikiTestTask.Controllers
             }).ToList();
             return ordersDto;
         }
+        [HttpGet("GetOrderById")]
+        public async Task<ActionResult<OrderDto>> GetOrderById(int id)
+        {
+            var order = await _context.Orders.FirstOrDefaultAsync(e => e.OrderId == id);
 
+            if (order == null) return NotFound();
+
+            var orderDto = new OrderDto()
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
+                Status = order.Status,
+                SumPrice = order.SumPrice
+            };
+            return orderDto;
+        }
         //Quite massive action, maybe will implement some helpers or triggers to make it smaller
         [HttpPost("CreateOrder")]
         public async Task<ActionResult> CreateOrder(CreateOrderDto orderDto)
