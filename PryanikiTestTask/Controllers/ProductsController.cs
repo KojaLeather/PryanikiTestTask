@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using PryanikiTestTask.Data;
-using PryanikiTestTask.Data.Models.DTO;
 using PryanikiTestTask.Data.Models;
 using PryanikiTestTask.Data.Models.DTO.ProductDTOs;
 

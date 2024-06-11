@@ -49,6 +49,31 @@ namespace PryanikiTestTask.Controllers
             };
             return orderDto;
         }
+        [HttpGet("GetOrdersWithProductsById")]
+        public async Task<ActionResult<OrderWithProductsDto>> GetOrdersWithProductsById(int id)
+        {
+            var order = await _context.Orders.Include(e => e.ProductOrders).ThenInclude(e => e.Product).FirstOrDefaultAsync(e => e.OrderId == id);
+
+            if (order == null) return NotFound();
+
+            var orderDto = new OrderWithProductsDto
+            {
+                OrderId = order.OrderId,
+                OrderDate = order.OrderDate,
+                Status = order.Status,
+                SumPrice = order.SumPrice,
+                ProductsDto = order.ProductOrders.Select(e => new ProductDto
+                {
+                    ProductId = e.Product.ProductId,
+                    Name = e.Product.Name,
+                    Category = e.Product.Category,
+                    Description = e.Product.Description,
+                    Price = e.Product.Price,
+                    Quanity = e.Quantity
+                }).ToList()
+            };
+            return orderDto;
+        }
         //Quite massive action, maybe will implement some helpers or triggers to make it smaller
         [HttpPost("CreateOrder")]
         public async Task<ActionResult> CreateOrder(CreateOrderDto orderDto)

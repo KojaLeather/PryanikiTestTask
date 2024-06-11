@@ -1,4 +1,4 @@
-﻿namespace PryanikiTestTask.Data.Models.DTO
+﻿namespace PryanikiTestTask.Data.Models.DTO.ProductDTOs
 {
     public class ProductToAddDto
     {
