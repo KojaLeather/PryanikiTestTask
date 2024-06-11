@@ -131,5 +131,18 @@ namespace PryanikiTestTask.Controllers
                 return BadRequest(ex);
             }
         }
+        //Didnt really like the delete funtion in this type of business logic, but oh well
+        [HttpDelete("DeleteOrder")]
+        public async Task<ActionResult> DeleteOrder (int id)
+        {
+            var orderToDelete = await _context.Orders.FirstOrDefaultAsync(e => e.OrderId == id);
+
+            if (orderToDelete == null) return NotFound();
+
+            _context.Orders.Remove(orderToDelete);
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
     }
 }
